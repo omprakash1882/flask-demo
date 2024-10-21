@@ -3,6 +3,7 @@ pipeline {
 
     environment {
         DOCKERHUB_CREDENTIALS = credentials('dockerhub-credentials-id')
+        PYTHON_ENV = '/usr/bin/python3'
     }
 
     stages {
@@ -10,6 +11,10 @@ pipeline {
             steps {
                 git branch: 'main', url: 'https://github.com/omprakash1882/flask-demo.git'
             }
+        }
+        stage('Unit tests'){
+            sh "${PYTHON_ENV} -m pip3 install -r requirements.txt"
+            sh "${PYTHON_ENV} -m pytest test_app.py"
         }
         stage('Build docker image') {
             steps {  
