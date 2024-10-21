@@ -3,7 +3,6 @@ pipeline {
 
     environment {
         DOCKERHUB_CREDENTIALS = credentials('dockerhub-credentials-id')
-        //DOCKER_IMAGE = 'omprakashkami/flask-demo'
     }
 
     stages {
@@ -14,7 +13,7 @@ pipeline {
         }
         stage('Build docker image') {
             steps {  
-                sh 'docker build -t omprakashkami/flaskapp:$BUILD_NUMBER .'
+                sh 'docker build -t omprakashkami/flask-demo:latest .'
             }
         }
         stage('login to dockerhub') {
@@ -24,26 +23,13 @@ pipeline {
         }
         stage('push image') {
             steps{
-                sh 'docker push omprakashkami/flaskapp:$BUILD_NUMBER'
+                sh 'docker push omprakashkami/flask-demo:latest'
             }
         }
-
-        // stage('Build Docker Image') {
-        //     steps {
-        //         script {
-        //             docker.build("${DOCKER_IMAGE}:${env.BUILD_ID}")
-        //         }
-        //     }
-        // }
-
-        // stage('Push Docker Image') {
-        //     steps {
-        //         script {
-        //             docker.withRegistry('https://index.docker.io/v1/', DOCKERHUB_CREDENTIALS) {
-        //                 docker.image("${DOCKER_IMAGE}:${env.BUILD_ID}").push()
-        //             }
-        //         }
-        //     }
-        // }
+    }
+    post {
+        always {
+            sh 'docker logout'
+        }
     }
 }
