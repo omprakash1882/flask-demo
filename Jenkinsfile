@@ -13,8 +13,10 @@ pipeline {
             }
         }
         stage('Unit tests'){
+            steps { 
             sh "${PYTHON_ENV} -m pip3 install -r requirements.txt"
             sh "${PYTHON_ENV} -m pytest test_app.py"
+            }
         }
         stage('Build docker image') {
             steps {  
