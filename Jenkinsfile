@@ -20,7 +20,7 @@ pipeline {
         }
         stage('Build docker image') {
             steps {  
-                sh 'docker build -t omprakashkami/flask-demo:latest .'
+                sh 'docker build -t omprakashkami/flask-demo:$BUILD_NUMBER .'
             }
         }
         stage('login to dockerhub') {
@@ -30,7 +30,7 @@ pipeline {
         }
         stage('push image') {
             steps{
-                sh 'docker push omprakashkami/flask-demo:latest'
+                sh 'docker push omprakashkami/flask-demo:$BUILD_NUMBER'
             }
         }
     }
