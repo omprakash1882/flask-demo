@@ -14,7 +14,7 @@ pipeline {
         }
         stage('Unit tests'){
             steps { 
-            sh "${PYTHON_ENV} -m pip3 install -r requirements.txt"
+            sh "${PYTHON_ENV} -m pip install -r requirements.txt"
             sh "${PYTHON_ENV} -m pytest test_app.py"
             }
         }
