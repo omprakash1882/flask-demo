@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask-demo
+spec:
+  selector:
+    matchLabels:
+      app: flask-demo
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: flask-demo
+    spec:
+      containers:
+      - image: omprakashkami/flask-demo:17
+        imagePullPolicy: Always
+        name: flask-demo
+        ports:
+        - containerPort: 5000
+        resources:
+          limits:
+            cpu: 500m
+          requests:
+            cpu: 200m
